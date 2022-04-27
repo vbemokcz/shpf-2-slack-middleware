@@ -14,7 +14,7 @@ app = Flask(__name__)
 
 @app.route('/', methods=['GET'])
 def index():
-    return 'SHPF-2-SLCK MiddleWare'
+    return '<h1><a href="https://github.com/malchikkCZ/shpf-2-slack-middleware">SHPF-2-SLCK MiddleWare</a></h1>'
 
 @app.route('/theme-publish/<auth_hash>', methods=['POST'])
 def theme_publish_endpoint(auth_hash):
@@ -25,7 +25,7 @@ def theme_publish_endpoint(auth_hash):
         shop_name = request.headers.get('X-Shopify-Shop-Domain')
 
         SLACK = SlackSender(SLACK_TOKEN, SLACK_CHANNEL)
-        SLACK.send(f'New master theme **{theme_title}** id **{theme_id}** has been published at {shop_name}.')
+        SLACK.send(f'New master theme *{theme_title}* id *{theme_id}* has been published at {shop_name}.')
 
         return 'Success', 200
 
