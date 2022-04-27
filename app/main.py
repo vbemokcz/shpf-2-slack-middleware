@@ -16,7 +16,7 @@ app = Flask(__name__)
 def index():
     return 'SHPF-2-SLCK MiddleWare'
 
-@app.route('/theme-publish/<str:auth_hash>', methods=['POST'])
+@app.route('/theme-publish/<auth_hash>', methods=['POST'])
 def theme_publish_endpoint(auth_hash):
     if auth_hash == os.environ.get('AUTH_HASH'):
         data = request.json
