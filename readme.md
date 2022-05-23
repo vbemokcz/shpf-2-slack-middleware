@@ -12,3 +12,5 @@ You need to specify following environment variables:
 `AUTH_HASH` - any string, works as simple authentication
 `SLACK_CHANNEL` - ID of the slack channel, where you want to send messages
 `SLACK_TOKEN` - your slack API access token, see slack docs for more information
+
+<br>
