@@ -40,16 +40,16 @@ def draft_order_get_endpoint(shop_name):
     draft_order = DraftOrder.query.filter_by(shop=shop_name)[-1]
 
     if draft_order:
-        current_time = dt.datetime.now(pytz.timezone('Europe/Berlin'))
+        current_time = dt.datetime.now()
         order_time = dt.datetime.strptime(draft_order.created_at.split('+')[0], '%Y-%m-%dT%H:%M:%S')
-        order_time = order_time.astimezone()
+        #order_time = order_time.astimezone()
 
         print(current_time.strftime('%Y-%m-%d %H:%M'))
         print(order_time.strftime('%Y-%m-%d %H:%M'))
 
         delta_time = current_time - order_time
 
-        return f'{delta_time.total_seconds()}', 200
+        return f'{delta_time.total_seconds() / 60}', 200
 
     return 'Not found', 404
 
