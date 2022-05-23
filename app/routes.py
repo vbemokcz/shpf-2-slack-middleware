@@ -44,8 +44,10 @@ def draft_order_get_endpoint(shop_name):
         order_time = dt.datetime.strptime(draft_order.created_at.split('+')[0], '%Y-%m-%dT%H:%M:%S')
         order_time = order_time.astimezone(pytz.timezone('Europe/Berlin'))
 
-        delta_time = current_time - order_time
+        print(current_time.strftime('%Y-%m-%d %H:%M'))
+        print(order_time.strftime('%Y-%m-%d %H:%M'))
 
+        delta_time = current_time - order_time
 
         return f'{delta_time.total_seconds()}', 200
 
