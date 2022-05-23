@@ -40,7 +40,7 @@ def draft_order_get_endpoint(shop_name):
     draft_order_query = DraftOrder.query.filter_by(shop=shop_name)
 
     if draft_order_query:
-        draft_order = draft_order[-1]
+        draft_order = draft_order_query[-1]
         current_time = dt.datetime.now().timestamp()
         order_time = float(draft_order.timestamp)
 
