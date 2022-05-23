@@ -37,18 +37,16 @@ def theme_publish_endpoint(auth_hash):
 @app.route('/draft-order/<shop_name>', methods=['GET'])
 def draft_order_get_endpoint(shop_name):
 
-    draft_order = DraftOrder.query.filter_by(shop=shop_name)[-1]
+    draft_order_query = DraftOrder.query.filter_by(shop=shop_name)
 
-    if draft_order:
+    if len(draft_order_query) > 0:
+        draft_order = draft_order[-1]
         current_time = dt.datetime.now().timestamp()
         order_time = float(draft_order.timestamp)
 
-        print(current_time)
-        print(order_time)
-
         delta_time = current_time - order_time
 
-        return f'{delta_time / 60}', 200
+        return f'{round(delta_time / 60, 2)}', 200
 
     return 'Not found', 404
 
@@ -59,7 +57,6 @@ def draft_order_post_endpoint(auth_hash):
         data = request.json
         shop_name = request.headers.get("X-Shopify-Shop-Domain").split('.myshopify')[0]
 
-        print(shop_name)
         draft_order = DraftOrder(
             shop = shop_name,
             created_at = data['created_at'],
