@@ -1,5 +1,6 @@
 import os
 import datetime as dt
+import pytz
 
 from flask import request
 
@@ -39,7 +40,7 @@ def draft_order_get_endpoint(shop_name):
     draft_order = DraftOrder.query.filter_by(shop=shop_name)[-1]
 
     if draft_order:
-        current_time = dt.datetime.now()
+        current_time = dt.datetime.now(pytz.timezone('Europe/Berlin'))
         order_time = dt.datetime.strptime(draft_order.created_at.split('+')[0], '%Y-%m-%dT%H:%M:%S')
 
         delta_time = current_time - order_time
