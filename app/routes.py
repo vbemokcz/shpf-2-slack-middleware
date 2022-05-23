@@ -44,12 +44,12 @@ def draft_order_get_endpoint(shop_name):
         order_time = dt.datetime.strptime(draft_order.created_at.split('+')[0], '%Y-%m-%dT%H:%M:%S')
         order_time = order_time.astimezone().timestamp()
 
-        print(current_time.strftime('%Y-%m-%d %H:%M'))
-        print(order_time.strftime('%Y-%m-%d %H:%M'))
+        print(current_time)
+        print(order_time)
 
         delta_time = current_time - order_time
 
-        return f'{delta_time.total_seconds() / 60}', 200
+        return f'{delta_time / 60}', 200
 
     return 'Not found', 404
 
