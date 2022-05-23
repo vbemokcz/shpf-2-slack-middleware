@@ -42,7 +42,7 @@ def draft_order_get_endpoint(shop_name):
         current_time = dt.datetime.now()
         order_time = dt.datetime.strptime(draft_order.created_at.split('+')[0], '%Y-%m-%dT%H:%M:%S')
 
-        delta_time = current_time - delta_time
+        delta_time = current_time - order_time
 
 
         return f'{delta_time.strftime("%M")}', 200
