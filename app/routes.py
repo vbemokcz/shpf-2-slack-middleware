@@ -59,7 +59,7 @@ def draft_order_post_endpoint(auth_hash):
         data = request.json
 
         draft_order = DraftOrder(
-            shop = request.headers.get('X-Shopify-Shop-Domain').replace('.myshopify.com', ''),
+            shop = f'{request.headers.get("X-Shopify-Shop-Domain")}'.replace('.myshopify.com', ''),
             created_at = data['created_at'],
             timestamp = f'{dt.datetime.now().timestamp()}',
             order_name = data['name']
