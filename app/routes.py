@@ -45,7 +45,7 @@ def draft_order_get_endpoint(shop_name):
         delta_time = current_time - order_time
 
 
-        return f'{delta_time.seconds}', 200
+        return f'{delta_time.total_seconds()}', 200
 
     return 'Not found', 404
 
