@@ -40,9 +40,8 @@ def draft_order_get_endpoint(shop_name):
     draft_order = DraftOrder.query.filter_by(shop=shop_name)[-1]
 
     if draft_order:
-        current_time = dt.datetime.now(pytz.timezone('Europe/Berlin')).timestamp()
-        order_time = dt.datetime.strptime(draft_order.created_at.split('+')[0], '%Y-%m-%dT%H:%M:%S')
-        order_time = order_time.timestamp()
+        current_time = dt.datetime.now().timestamp()
+        order_time = float(draft_order.timestamp)
 
         print(current_time)
         print(order_time)
@@ -62,6 +61,7 @@ def draft_order_post_endpoint(auth_hash):
         draft_order = DraftOrder(
             shop = request.headers.get('X-Shopify-Shop-Domain'),
             created_at = data['created_at'],
+            timestamp = f'{dt.datetime.now().timestamp()}',
             order_name = data['name']
         )
 
