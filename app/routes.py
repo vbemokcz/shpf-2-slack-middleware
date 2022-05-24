@@ -1,6 +1,5 @@
 import os
-import datetime as dt
-import pytz
+from datetime import datetime
 
 from flask import request
 
@@ -41,7 +40,7 @@ def draft_order_get_endpoint(shop_name):
 
     if draft_order_query:
         draft_order = draft_order_query[-1]
-        current_time = dt.datetime.now().timestamp()
+        current_time = datetime.now().timestamp()
         order_time = float(draft_order.timestamp)
 
         delta_time = current_time - order_time
@@ -60,7 +59,8 @@ def draft_order_post_endpoint(auth_hash):
         draft_order = DraftOrder(
             shop = shop_name,
             created_at = data['created_at'],
-            timestamp = f'{dt.datetime.now().timestamp()}',
+            timestamp = f'{datetime.now().timestamp()}',
+            datetime = datetime.now(),
             order_name = data['name']
         )
 
