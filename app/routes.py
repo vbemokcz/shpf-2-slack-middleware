@@ -41,23 +41,26 @@ def draft_order_get_endpoint(shop_name):
     except IndexError:
         return 'Not found', 404
     else:
-        current_time = datetime.now().timestamp()
-        order_time = float(draft_order.timestamp)
+        current_time = datetime.now()
+        order_time = draft_order.datetime
         delta_time = current_time - order_time
 
-        return f'{round(delta_time / 60, 2)}', 200
+        return f'{round(delta_time.total_seconds() / 60, 2)}', 200
 
 
 @app.route('/draft-order/<auth_hash>', methods=['POST'])
 def draft_order_post_endpoint(auth_hash):
     if auth_hash == os.environ.get('AUTH_HASH'):
         data = request.json
+        print(data)
+
         shop_name = request.headers.get("X-Shopify-Shop-Domain").split('.myshopify')[0]
+
+        DraftOrder.delete_expired()
 
         draft_order = DraftOrder(
             shop = shop_name,
             created_at = data['created_at'],
-            timestamp = f'{datetime.now().timestamp()}',
             datetime = datetime.now(),
             order_name = data['name']
         )
