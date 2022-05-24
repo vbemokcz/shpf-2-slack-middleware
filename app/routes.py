@@ -58,6 +58,7 @@ def draft_order_post_endpoint(auth_hash):
             shop = shop_name,
             created_at = data['created_at'],
             timestamp = f'{datetime.now().timestamp()}',
+            datetime = datetime.now(),
             order_name = data['name']
         )
 

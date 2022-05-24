@@ -6,6 +6,7 @@ class DraftOrder(db.Model):
     shop = db.Column(db.String(100), nullable=False)
     created_at = db.Column(db.String(100), nullable=False)
     timestamp = db.Column(db.String(100), nullable=False)
+    datetime = db.Column(db.DateTime, nullable=False)
     order_name = db.Column(db.String(100), nullable=False)
 
 
