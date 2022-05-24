@@ -35,29 +35,26 @@ def theme_publish_endpoint(auth_hash):
 
 @app.route('/draft-order/<shop_name>', methods=['GET'])
 def draft_order_get_endpoint(shop_name):
-
-    try:
-        draft_order = DraftOrder.query.filter_by(shop=shop_name)[-1]
-    except IndexError:
-        return 'Not found', 404
-    else:
+    draft_order = DraftOrder.query.order_by(DraftOrder.datetime.desc()).filter_by(shop=shop_name).first()
+    if draft_order:
         current_time = datetime.now()
         order_time = draft_order.datetime
         delta_time = current_time - order_time
 
         return f'{round(delta_time.total_seconds() / 60, 2)}', 200
 
+    return 'Not found', 404
+
 
 @app.route('/draft-order/<auth_hash>', methods=['POST'])
 def draft_order_post_endpoint(auth_hash):
+    DraftOrder.delete_expired()
     if auth_hash == os.environ.get('AUTH_HASH'):
         data = request.json
-        print(data)
+        if 'selly' in data['tags']:
+            return "Selly won't be saved", 200
 
         shop_name = request.headers.get("X-Shopify-Shop-Domain").split('.myshopify')[0]
-
-        DraftOrder.delete_expired()
-
         draft_order = DraftOrder(
             shop = shop_name,
             created_at = data['created_at'],
